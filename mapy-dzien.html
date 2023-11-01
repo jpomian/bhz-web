@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .supreme {
+            font-weight: bold;
+            font-size: 36px;
+            margin: 20px 10px;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            width: 33%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #222;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #555;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #914444;
+        }
+
+        table#table2 tr:nth-child(even) {
+            background-color: #a15132; /* Even rows */
+        }
+
+        tr:hover {
+            background-color: #666;
+        }
+
+        button {
+            font-weight: bold;
+            background-color: #444; /* Darker button color */
+            color: #fff; /* Light button text color */
+            border: none;
+            padding: 10px 35px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+     <script>
+        // JavaScript function to toggle table visibility
+        function toggleTable(tableId) {
+            var tables = document.querySelectorAll('table');
+            tables.forEach(function(table) {
+                table.style.display = 'none';
+            });
+            var selectedTable = document.getElementById(tableId);
+            if (selectedTable) {
+                selectedTable.style.display = 'table';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="supreme">Mapcykl Dzienny</div>
+    <button onclick="toggleTable('table1')">Klasyczne</button>
+    <button onclick="toggleTable('table2')">Escape</button>
+    <table id="table2" style="display: none;">
+        <tr>
+            <th>Mapa</th>
+            <th>Min. liczba graczy</th>
+            <th>Max. liczba graczy</th>
+        </tr>
+        <tr>
+            <td>ze_escapetrain</td>
+            <td>0</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>ze_xmas_escape</td>
+            <td>4</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>ze_inferno_tap</td>
+            <td>8</td>
+            <td>16</td>
+        </tr>
+    </table>
+    <table id="table1">
+        <tr>
+            <th>Mapa</th>
+            <th>Min. liczba graczy</th>
+            <th>Max. liczba graczy</th>
+        </tr>
+        <tr>
+            <td>zm_ds_army_new</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_ziger_new</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_oblivion</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_sand_new</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_lmn_dustyworld</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_2day_2</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_fdust2x2</td>
+            <td>0</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>zm_zombie-apocalypse</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_aztec_kamp</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_colores</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_deko2</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_3rooms</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_dust_world</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_cross</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_camp_mono</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_castle_siege</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_kill_duster</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_kancl3r</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_inferno</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_max_payne</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_nokaut</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_tonga</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_LB</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_snow_nv</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_winter_big</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_gbox5</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_gbox7</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_pis2</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_neon</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_fortuna</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_perfect</td>
+            <td>0</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td>zm_brambor</td>
+            <td>4</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>zm_Hard-Mode</td>
+            <td>4</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>zm_world_rmx_fixed</td>
+            <td>4</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>zm_remix</td>
+            <td>4</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>zm_zm_dust_kamp</td>
+            <td>4</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>zm_zow_funzone</td>
+            <td>8</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>zm_school</td>
+            <td>8</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>zm_fun_world_2</td>
+            <td>8</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td>zm_snow_volta</td>
+            <td>8</td>
+            <td>24</td>
+        </tr>
+    </table>
+    <a href="index.html"><button>Powrót</button></a>
+</body>
+</html>

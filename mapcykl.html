@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mapcykl</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            /* Center the buttons horizontally */
+        }
+
+        .button-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center the content horizontally */
+            text-align: center;
+            /* Center the text horizontally */
+            margin: 0 10px;
+            /* Add spacing between buttons */
+        }
+
+        .button {
+            font-weight: bold;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 20px 40px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* Change the background color on hover */
+            color: #ff4040;
+            /* Change the text color on hover */
+        }
+
+        .button-text {
+            color: #928f8f;
+            margin-top: 10px;
+        }
+
+        .header-image {
+            width: 200px;
+            height: auto;
+        }
+
+        .lesser-title {
+            color: #FF4040;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .header-image {
+            width: 200px;
+            height: auto;
+        }
+
+        .lesser-title {
+            color: #FF4040;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="header-image" src="img/biohazard.png" alt="Biohazard" />
+    <p class="lesser-title">Zombie Biohazard</p>
+    <div class="button-container">
+        <div class="button-wrapper">
+            <a href="mapy-dzien.html" class="button" id="button1">Mapcykl Dzienny</a>
+            <p class="button-text">(9:00-21:00)</p>
+        </div>
+        <div class="button-wrapper">
+            <a href="mapy-noc.html" class="button" id="button2">Mapcykl Nocny</a>
+            <p class="button-text">(21:00-9:00)</p>
+        </div>
+    </div>
+</body>
+
+</html>
