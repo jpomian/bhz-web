@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mapcykl</title>
+    <title>Regulamin</title>
     <style>
         body {
             display: flex;
@@ -79,24 +79,50 @@
             color: #FF4040;
             font-size: 36px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 10px 0;
+        }
+
+        .warning {
+            color: #888;
+            font-style: italic;
+        }
+
+        .big-button {
+            width: calc(3 * (10px 30px + 10px));
+            background-color: #444;
+            color: #fff;
+            border: none;
+            margin: 25px 0;
+            padding: 10px 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .big-button:hover {
+            background-color: #555;
+            /* Change the background color on hover */
+            color: gold;
+            /* Change the text color on hover */
         }
     </style>
 </head>
 
 <body>
     <img class="header-image" src="img/biohazard.png" alt="Biohazard" />
-    <p class="lesser-title">Zombie Biohazard</p>
+    <p class="lesser-title">Regulamin</p>
+    <p class="warning">Nieznajomość regulaminu nie zwalnia Cie z jego nie przestrzegania!</p>
     <div class="button-container">
         <div class="button-wrapper">
-            <a href="mapy-dzien.html" class="button" id="button1">Mapcykl Dzienny</a>
-            <p class="button-text">(9:00-21:00)</p>
+            <a href="reg/ogolny.html" class="button" id="button1">Ogólny</a>
         </div>
         <div class="button-wrapper">
-            <a href="mapy-noc.html" class="button" id="button2">Mapcykl Nocny</a>
-            <p class="button-text">(21:00-9:00)</p>
+            <a href="reg/ct.html" class="button" id="button2">CT</a>
+        </div>
+        <div class="button-wrapper">
+            <a href="reg/zm.html" class="button" id="button2">Zombie</a>
         </div>
     </div>
+
+    <button class="big-button" onclick="location.href='index.html'">Strona główna</button>
 
     <iframe src="footer.html" scrolling="no" frameborder="0" width="100%" height="160"></iframe>
 
