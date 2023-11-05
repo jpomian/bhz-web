@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mapcykl</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            /* Center the buttons horizontally */
+        }
+
+        .button-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Center the content horizontally */
+            text-align: center;
+            /* Center the text horizontally */
+            margin: 0 10px;
+            /* Add spacing between buttons */
+        }
+
+        .button {
+            font-weight: bold;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 20px 40px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .button:hover {
+            background-color: #555;
+            /* Change the background color on hover */
+            color: #e1b137;
+            /* Change the text color on hover */
+        }
+
+        .button-text {
+            color: #928f8f;
+            margin-top: 10px;
+        }
+
+        .header-image {
+            width: 200px;
+            height: auto;
+        }
+
+        .lesser-title {
+            color: #d29d15;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .header-image {
+            width: 400px;
+            height: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <img class="header-image" src="img/wykres.png" alt="Statystyki" />
+    <p class="lesser-title">Statystyki Graczy</p>
+    <div class="button-container">
+        <div class="button-wrapper">
+            <a href="staty/czas.php" class="button" id="button1">Topka czasu</a>
+        </div>
+        <div class="button-wrapper">
+            <a href="wip.html" class="button" id="button2">Inne</a>
+        </div>
+    </div>
+
+    <iframe src="footer.html" scrolling="no" frameborder="0" width="100%" height="160"></iframe>
+
+</body>
+
+</html>
