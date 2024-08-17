@@ -66,7 +66,7 @@
         }
 
         .big-button {
-            width: calc(3 * (10px 30px + 10px));
+            width: calc(3 * (10px 40px + 10px));
             background-color: #444;
             color: #fff;
             border: none;
@@ -74,6 +74,11 @@
             padding: 10px 30px;
             cursor: pointer;
             font-weight: bold;
+        }
+
+        .special-button {
+            font-weight: bold;
+            color:#eeeb2d
         }
 
         .big-button:hover {
@@ -86,11 +91,11 @@
 <body>
     <img class="header-image" src="img/biohazard.png" alt="Biohazard" />
     <h1>Witaj na głównej stronie Zombie Biohazard!</h1>
-    <p class="server-info">IP: 193.33.177.189:27015</p>
-    <p>Wciśnij przycisk, by odwiedzić jedną z podstron informacyjnych.</p>
+    <p class="server-info">IP: Wkrótce...</p>
     <div class="button-container">
         <button onclick="location.href='vip.html'">VIP Info</button>
         <button onclick="location.href='mapcykl.html'">Mapy</button>
+        <button class="special-button" onclick="location.href='dotacje.html'">Zbiórka</button>
         <button onclick="location.href='rangi.html'">Rangi</button>
         <button onclick="location.href='statmenu.html'">Statystyki</button>
     </div>

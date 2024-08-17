@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"> <!-- Set the character encoding to UTF-8 -->
+    <title>Dotacje</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #333;
+            color: #fff;
+        }
+        .header-image {
+            width: 200px;
+            height: auto;
+        }
+        .supreme {
+            margin: 20px 15px;
+            font-weight: bold;
+            font-size: 36px;
+        }
+        button {
+            font-weight: bold;
+            background-color: #444; /* Darker button color */
+            color: #fff; /* Light button text color */
+            border: none;
+            margin-top: 15px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .discount {
+            font-weight: bold;
+            color: #FFD700; /* Golden color */
+            font-size: 28px;
+        }
+        .progress-container {
+            width: 80%;
+            background-color: #444;
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+        .progress-bar {
+            width: 0;
+            height: 40px;
+            background-color: #9e201e;
+            font-weight: bold;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            transition: width 0.5s;
+            animation: pulsate 2s infinite;
+        }
+        @keyframes pulsate {
+            0% {
+                background-color: #9e201e;
+            }
+            50% {
+                background-color: #b32d2d;
+            }
+            100% {
+                background-color: #9e201e;
+            }
+        }
+        .progress-goal {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #444;
+            color: #fff;
+            padding: 0 10px;
+            font-weight: bold;
+        }
+        table {
+            width: 80%;
+            margin-top: 40px; /* Increased margin for more padding */
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #555;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #444;
+        }
+        td {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <img class="header-image" src="img/riches.png" />
+    <p class="discount">Pieniądze idą na poczet reaktywacji serwera! Na co czekasz?</p>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar">0%</div>
+        <div class="progress-goal">150zł</div>
+    </div>
+    <table id="donations-table">
+        <thead>
+            <tr>
+                <th>Nick</th>
+                <th>Kwota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Donation rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+    <a href="index.html"><button>Powrót</button></a>
+
+    <script>
+        const donationGoal = 150;
+        const donations = {
+            Mixtaz: 20,
+        };
+
+        function updateProgressBar() {
+            const totalDonations = Object.values(donations).reduce((acc, curr) => acc + curr, 0);
+            const progressPercentage = (totalDonations / donationGoal) * 100;
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage.toFixed(2)}%`;
+        }
+
+        function populateDonationsTable() {
+            const tableBody = document.querySelector('#donations-table tbody');
+            for (const [name, amount] of Object.entries(donations)) {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                const amountCell = document.createElement('td');
+
+                nameCell.textContent = name;
+                amountCell.textContent = `${amount} zł`;
+
+                row.appendChild(nameCell);
+                row.appendChild(amountCell);
+                tableBody.appendChild(row);
+            }
+        }
+
+        updateProgressBar();
+        populateDonationsTable();
+    </script>
+
+</body>
+</html>
