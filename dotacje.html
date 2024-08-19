@@ -98,11 +98,18 @@
         td {
             background-color: #555;
         }
+        .total-donations {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #FFD700; /* Golden color */
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
     <img class="header-image" src="img/riches.png" />
-    <p class="discount">Pieniądze idą na poczet reaktywacji serwera! Na co czekasz?</p>
+    <div class="total-donations" id="total-donations">Łącznie zebrano: 0 zł.</div>
+    <p class="discount">Dziękujemy!</p>
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar">0%</div>
         <div class="progress-goal">150zł</div>
@@ -124,10 +131,11 @@
         const donationGoal = 150;
         const donations = {
             szymixoo: 50,
+            narkobaron: 30,
             jargan: 20,
+            'Kropek aka paradise': 20,
             AvgaN: 20,
             'Shy Gay': 20,
-            Mixtaz: 20,
             Polako: 10,
         };
 
@@ -137,6 +145,9 @@
             const progressBar = document.getElementById('progress-bar');
             progressBar.style.width = `${progressPercentage}%`;
             progressBar.textContent = `${progressPercentage.toFixed(2)}%`;
+
+            // Update total donations display
+            document.getElementById('total-donations').textContent = `Łącznie zebrano: ${totalDonations} zł.`;
         }
 
         function populateDonationsTable() {
@@ -158,6 +169,5 @@
         updateProgressBar();
         populateDonationsTable();
     </script>
-
 </body>
 </html>
