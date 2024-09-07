@@ -2,8 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bhz.css" media="all" rel="Stylesheet" type="text/css" />
-    <title>Top statystyk</title>
+    <link href="bhz.css" media="all" rel="stylesheet" type="text/css" />
+    <title>Statystyki: Zombie</title>
 </head>
 
 <body>
@@ -179,6 +179,8 @@
         }
     }
     echo "</div>";
+
+    echo "<a href='../index.html'><button>Powrót</button></a>";
 
     // Close the database connection
     $stmt->close();
