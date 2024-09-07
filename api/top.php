@@ -2,7 +2,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bhz.css" media="all" rel="stylesheet" type="text/css" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.42em;
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .supreme {
+            color: rgb(223, 56, 19);
+            margin: 10px 15px;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .submain {
+            color: rgb(206, 45, 27);
+            margin: 12px 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            width: 42%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #222;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #555;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #444;
+        }
+
+        tr:hover {
+            background-color: #464A52;
+        }
+
+        .gold {
+            color: gold; /* Change the text color to gold for gold players */
+            font-weight: bold; /* Make the text bold for gold players */
+            }
+
+        .silver {
+            color: silver; /* Change the text color to silver for silver players */
+            text-shadow: 1px 1px;
+        }
+
+        .bronze {
+            color: #cd7f32; /* Change the text color to bronze color for bronze players */
+            font-weight: bold; /* Make the text bold for bronze players */
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .page-number {
+            margin: 0px 5px; 
+            font-size: 14px;
+        }
+
+        button {
+            font-weight: bold;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px 5px 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #searchInput, .page-number {
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #444; /* Darker border color */
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width: 300px; /* Adjust the width as needed */
+        background-color: #333; /* Dark background color */
+        color: #fff; /* White text color */
+        }
+
+        /* Styling for the search button (if you have one) */
+        #search-button {
+            padding: 10px 20px;
+            background-color: #444; /* Dark button background color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Style the search container */
+        #search-container {
+            margin: 10px 5px;
+            text-align: center;
+        }
+    </style>
     <title>Statystyki: Zombie</title>
 </head>
 
