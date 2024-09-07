@@ -3,5 +3,14 @@
       "api/*.php": {
         "runtime": "vercel-php@0.7.1"
       }
+    },
+    "routes": [
+      { "src": "/(.*)",  "dest": "/api/top.php" }
+    ],
+    "env": {
+      "DB_HOST": "145.239.236.240",
+      "DB_USER": "srv80132",
+      "DB_PASS": "OAmT8rD6RL",
+      "DB_NAME": "srv80132"
     }
   }
