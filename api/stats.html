@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statystyki: Biohazard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="home.html" class="logo">Biohazard</a>
+        <nav>
+            <a href="index.html"></a>
+            <a href="wip.html">Osiągnięcia</a>
+            <a href="wip.html">Nagrody</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Hala chwały</h1>
+        <div class="search-container">
+            <input type="text" id="playerSearch" placeholder="Wyszukaj gracza">
+        </div>
+        <table id="leaderboardTable">
+            <thead>
+                <tr>
+                    <th>Pozycja</th>
+                    <th>Nick</th>
+                    <th><i class="fas fa-biohazard"></i> Zarażenia</th>
+                    <th><i class="fas fa-skull"></i> Zabójstwa</th>
+                    <th><i class="fas fa-clock"></i> Czas gry</th>
+                    <th><i class="fas fa-eye"></i> Ostatnio widziano</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated dynamically -->
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prevPage">Poprzednia</button>
+            <input type="number" id="pageInput" min="1" value="1">
+            <button id="nextPage">Następna</button>
+        </div>
+    </main>
+    <footer>
+        <p>Zaprojektowano przez <a href="https://steamcommunity.com/id/mixtaz">Mixtaza</a>. &copy; 2024 Biohazard.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
