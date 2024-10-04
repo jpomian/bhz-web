@@ -11,7 +11,7 @@ let currentSort = 'Infections';
 let currentOrder = 'DESC';
 
 function fetchLeaderboard(page, search = '', sort = currentSort, order = currentOrder) {
-    fetch(`stats.php?page=${page}&limit=${playersPerPage}&search=${search}&sort=${sort}&order=${order}`)
+    fetch(`sql-stats.php?page=${page}&limit=${playersPerPage}&search=${search}&sort=${sort}&order=${order}`)
         .then(response => response.json())
         .then(data => {
             updateLeaderboard(data.players, search);
