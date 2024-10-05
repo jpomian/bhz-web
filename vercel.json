@@ -1,7 +1,11 @@
 {
-    "functions": {
-      "api/*": {
-        "runtime": "vercel-php@0.7.1"
-      }
+  "cleanUrls": true,
+  "functions": {
+    "api/*": {
+      "runtime": "vercel-php@0.7.1"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}
