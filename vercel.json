@@ -1,8 +1,13 @@
 {
-  "cleanUrls": "true",
   "functions": {
     "api/*": {
       "runtime": "vercel-php@0.7.1"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/api/public/(.*)",
+      "dest": "api/$1"
+    }
+  ]
 }
