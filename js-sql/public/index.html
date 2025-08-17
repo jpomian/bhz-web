@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drabinka</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1>Tabela wyników</h1>
-        <table id="stats-table">
-            <thead>
-                <tr>
-                    <th>Position</th>
-                    <th>Nickname</th>
-                    <th>Infections</th>
-                    <th>Kills</th>
-                    <th>Play Time</th>
-                    <th>Last Seen</th>
-                </tr>
-            </thead>
-            <tbody id="stats-body">
-                <!-- Data will be inserted here by JavaScript -->
-            </tbody>
-        </table>
-        <button id="refresh-btn">Refresh Data</button>
+      <h1>Tabela wyników</h1>
+      <table id="stats-table">
+        <thead>
+          <tr>
+            <th>Pozycja</th>
+            <th>Nickname</th>
+            <th>Infekcje</th>
+            <th>Zabicia</th>
+            <th>Czas Gry</th>
+            <th>Ostatnio widziany</th>
+          </tr>
+        </thead>
+        <tbody id="stats-body">
+          <!-- Data will be inserted here by JavaScripts -->
+        </tbody>
+      </table>
+      <button id="refresh-btn">Refresh Data</button>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function () {
-            const statsBody = document.getElementById('stats-body');
-            const refreshBtn = document.getElementById('refresh-btn');
+      document.addEventListener("DOMContentLoaded", async function () {
+        const statsBody = document.getElementById("stats-body");
+        const refreshBtn = document.getElementById("refresh-btn");
 
-            async function fetchData() {
-                try {
-                    const response = await fetch('http://localhost:3000/api/players');
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    const data = await response.json();
+        async function fetchData() {
+          try {
+            const response = await fetch("http://localhost:3000/api/players");
+            if (!response.ok) throw new Error("Network response was not ok");
+            const data = await response.json();
+            var i = 1;
 
-                    statsBody.innerHTML = '';
-                    data.forEach(player => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-            <td>${player.Pozycja}</td>
+            statsBody.innerHTML = "";
+            data.forEach((player) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+            <td>${i++}</td>
             <td>${player.Nick}</td>
-            <td>${player.Zarażenia}</td>
-            <td>${player.Zabójstwa}</td>
-            <td>${player['Czas gry']}</td>
-            <td>${new Date(player['Ostatnio widziano']).toLocaleString()}</td>
+            <td>${player.Infections}</td>
+            <td>${player.Kills}</td>
+            <td>${player.Time}</td>
+            <td>${player.Last}</td>
           `;
-                        statsBody.appendChild(row);
-                    });
-                } catch (error) {
-                    console.error('Error:', error);
-                    statsBody.innerHTML = '<tr><td colspan="6">Error loading data</td></tr>';
-                }
-            }
+              statsBody.appendChild(row);
+            });
+          } catch (error) {
+            console.error("Error:", error);
+            statsBody.innerHTML =
+              '<tr><td colspan="6">Error loading data</td></tr>';
+          }
+        }
 
-            refreshBtn.addEventListener('click', fetchData);
-            fetchData(); // Load data initially
-        });
+        refreshBtn.addEventListener("click", fetchData);
+        fetchData();
+      });
     </script>
+  </body>
+</html>
