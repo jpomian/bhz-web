@@ -1,13 +1,9 @@
 {
-  "functions": {
-    "api/*": {
-      "runtime": "vercel-php@0.7.1"
-    }
-  },
-  "routes": [
+  "version": 2,
+  "rewrites": [
     {
-      "src": "/api/public/(.*)",
-      "dest": "api/$1"
+      "source": "/(.*)",
+      "destination": "/api"
     }
   ]
 }
