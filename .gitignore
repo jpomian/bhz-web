@@ -1,1 +1,4 @@
 *.lock
+node_modules/
+.env
+legacy-php/vendor/*
