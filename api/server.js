@@ -11,7 +11,7 @@ const sql = `SELECT
     sql_mainstats.Infections,
     sql_mainstats.Kills,
     sql_times.\`Time Played\` AS \`Time\`,
-    sql_times.\`Last Seen\` AS \`Last\`
+    sql_times.\`First Seen\` AS \`Last\`
 FROM
     sql_mainstats
 INNER JOIN
@@ -26,7 +26,8 @@ const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PW,
   database: process.env.DB_DATABASE,
-  port: process.env.PORT
+  port: process.env.PORT,
+  charset: 'utf8mb4'
 };
 
 app.get('/api/players', async (req, res) => {

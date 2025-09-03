@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Leaderboard - Counter-Strike Division</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #3a4a3a 0%, #2d3d2d 50%, #1a2a1a 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #8b7355;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 115, 85, 0.1), transparent);
+            animation: sweep 3s infinite;
+        }
+        
+        @keyframes sweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #f0f0f0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8b7355;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .search-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #8b7355;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #f0f0f0;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            min-width: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #a68b5b;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(139, 115, 85, 0.3);
+        }
+        
+        .search-input::placeholder {
+            color: #8b7355;
+        }
+        
+        .clear-btn {
+            padding: 15px 25px;
+            background: #8b7355;
+            color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .clear-btn:hover {
+            background: #a68b5b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .leaderboard {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #8b7355;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .leaderboard-header {
+            background: linear-gradient(135deg, #8b7355 0%, #6d5a44 100%);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 80px 1fr 120px 120px 120px;
+            gap: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-items: center;
+        }
+        
+        .player-row {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 80px 1fr 120px 120px 120px;
+            gap: 20px;
+            border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .player-row:hover {
+            background: rgba(139, 115, 85, 0.1);
+            transform: translateX(5px);
+            border-left: 4px solid #8b7355;
+        }
+        
+        .player-row:hover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(139, 115, 85, 0.1), transparent);
+            pointer-events: none;
+        }
+        
+        .rank {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #8b7355;
+            text-align: center;
+        }
+        
+        .rank.top-3 {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #8b7355;
+            background: linear-gradient(135deg, #8b7355, #6d5a44);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #f0f0f0;
+        }
+        
+        .player-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #f0f0f0;
+        }
+        
+        .stat {
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .kills {
+            color: #ff6b6b;
+        }
+        
+        .deaths {
+            color: #ffa726;
+        }
+        
+        .kd-ratio {
+            color: #66bb6a;
+            font-weight: 700;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8b7355;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .search-input {
+                min-width: 250px;
+            }
+            
+            .leaderboard-header,
+            .player-row {
+                grid-template-columns: 60px 1fr 80px 80px 80px;
+                gap: 10px;
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .player-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .player-name {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .search-input {
+                min-width: 200px;
+            }
+            
+            .leaderboard-header,
+            .player-row {
+                grid-template-columns: 50px 1fr 60px 60px 70px;
+                gap: 8px;
+                padding: 12px;
+                font-size: 0.8rem;
+            }
+            
+            .player-info {
+                gap: 10px;
+            }
+            
+            .player-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">MILITARY LEADERBOARD</h1>
+            <p class="subtitle">Counter-Strike Division</p>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search by nickname..." id="searchInput">
+            <button class="clear-btn" id="clearBtn">Clear</button>
+        </div>
+        
+        <div class="leaderboard">
+            <div class="leaderboard-header">
+                <div>Rank</div>
+                <div>Player</div>
+                <div>Kills</div>
+                <div>Deaths</div>
+                <div>K/D</div>
+            </div>
+            <div id="playerList">
+                <!-- Players will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const players = [
+            { nickname: "ShadowStrike", kills: 2847, deaths: 1203, avatar: "SS" },
+            { nickname: "AlphaWolf", kills: 2634, deaths: 1156, avatar: "AW" },
+            { nickname: "GhostRecon", kills: 2521, deaths: 1089, avatar: "GR" },
+            { nickname: "IronSight", kills: 2398, deaths: 1234, avatar: "IS" },
+            { nickname: "StealthOps", kills: 2287, deaths: 1167, avatar: "SO" },
+            { nickname: "BattleAxe", kills: 2156, deaths: 1098, avatar: "BA" },
+            { nickname: "NightHawk", kills: 2043, deaths: 1203, avatar: "NH" },
+            { nickname: "WarMachine", kills: 1987, deaths: 1156, avatar: "WM" },
+            { nickname: "TacticalEdge", kills: 1876, deaths: 1289, avatar: "TE" },
+            { nickname: "CombatVet", kills: 1765, deaths: 1234, avatar: "CV" },
+            { nickname: "RangerElite", kills: 1654, deaths: 1167, avatar: "RE" },
+            { nickname: "SpecialForce", kills: 1543, deaths: 1298, avatar: "SF" },
+            { nickname: "CommandoX", kills: 1432, deaths: 1203, avatar: "CX" },
+            { nickname: "MarineCorps", kills: 1321, deaths: 1156, avatar: "MC" },
+            { nickname: "AirborneUnit", kills: 1210, deaths: 1289, avatar: "AU" }
+        ];
+
+        const playersWithRank = players.map((player, index) => ({
+            ...player,
+            originalRank: index + 1
+        }));
+
+        let filteredPlayers = [...playersWithRank];
+
+        function calculateKD(kills, deaths) {
+            return deaths === 0 ? kills.toFixed(2) : (kills / deaths).toFixed(2);
+        }
+
+        function renderPlayers(playerList) {
+            const playerListElement = document.getElementById('playerList');
+            
+            if (playerList.length === 0) {
+                playerListElement.innerHTML = '<div class="no-results">No players found matching your search.</div>';
+                return;
+            }
+            
+            playerListElement.innerHTML = playerList.map((player) => {
+                const rank = player.originalRank;
+                const kd = calculateKD(player.kills, player.deaths);
+                const isTop3 = rank <= 3;
+                
+                return `
+                    <div class="player-row">
+                        <div class="rank ${isTop3 ? 'top-3' : ''}">#${rank}</div>
+                        <div class="player-info">
+                            <div class="player-avatar">${player.avatar}</div>
+                            <div class="player-name">${player.nickname}</div>
+                        </div>
+                        <div class="stat kills">${player.kills.toLocaleString()}</div>
+                        <div class="stat deaths">${player.deaths.toLocaleString()}</div>
+                        <div class="stat kd-ratio">${kd}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterPlayers(searchTerm) {
+            if (!searchTerm.trim()) {
+                filteredPlayers = [...playersWithRank];
+            } else {
+                filteredPlayers = playersWithRank.filter(player => 
+                    player.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            renderPlayers(filteredPlayers);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterPlayers(e.target.value);
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            filterPlayers('');
+        });
+
+        renderPlayers(playersWithRank);
+    </script>
+</body>
+</html>

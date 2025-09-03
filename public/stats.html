@@ -1,68 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Drabinka</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <h1>Tabela wyników</h1>
-      <table id="stats-table">
-        <thead>
-          <tr>
-            <th>Pozycja</th>
-            <th>Nickname</th>
-            <th>Infekcje</th>
-            <th>Zabicia</th>
-            <th>Czas Gry</th>
-            <th>Ostatnio widziany</th>
-          </tr>
-        </thead>
-        <tbody id="stats-body">
-          <!-- Data will be inserted here by JavaScripts -->
-        </tbody>
-      </table>
-      <button id="refresh-btn">Refresh Data</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drabinka</title>
+  <link rel="stylesheet" href="lb.css" />
+</head>
+
+<body>
+  <div class="navbar">
+    <a href="/">
+      <img class="header-image" src="img/biohazard.png" alt="Biohazard" />
+    </a>
+    <div class="heading">
+      <h1>Hala sław</h1>
+      <span>27.08.24 - 10.01.25</span>
     </div>
+    <div class="spect">
+      <div class="spect-details">
+        <span class="spect-name">Gracz</span>
+        <span class="spect-rank">Ranking: #999</span>
+      </div>
+      <img class='spect-avi' src="img/zm.png" alt="Player Avatar" />
+    </div>
+  </div>
+  <div class="container">
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Wpisz nick..." id="searchInput">
+      <button class="clear-btn" id="clearBtn">O</button>
+    </div>
+    <table id="stats-table">
+      <thead>
+        <tr class="top-header">
+          <th>
+            Pozycja
+            <span class="sort-arrows">
+              <span class="arrow-up">▲</span>
+              <span class="arrow-down">▼</span>
+            </span>
+          </th>
+          <th>Nazwa gracza</th>
+          <th>Infekcje</th>
+          <th>Zabicia</th>
+          <th>Czas Gry</th>
+        </tr>
+      </thead>
+      <tbody id="stats-body">
+        <!-- Data will be inserted here by JavaScripts -->
+      </tbody>
+    </table>
+    <button id="refresh-btn">Refresh Data</button>
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-        const statsBody = document.getElementById("stats-body");
-        const refreshBtn = document.getElementById("refresh-btn");
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const statsBody = document.getElementById("stats-body");
+      const refreshBtn = document.getElementById("refresh-btn");
 
-        async function fetchData() {
-          try {
-            const response = await fetch("http://localhost:3000/api/players");
-            if (!response.ok) throw new Error("Network response was not ok");
-            const data = await response.json();
-            var i = 1;
+      function formatUNIX(input) {
+        const inputStr = input.toString();
+        if (inputStr.length === 10) {
+          const date = new Date(input * 1000);
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
+        } else {
+          const hours = Math.floor(input / 3600);
+          const minutes = Math.floor((input % 3600) / 60);
+          return `${hours}H : ${minutes.toString().padStart(2, '0')}M`;
+        }
+      }
 
-            statsBody.innerHTML = "";
-            data.forEach((player) => {
-              const row = document.createElement("tr");
-              row.innerHTML = `
-            <td>${i++}</td>
-            <td>${player.Nick}</td>
+      async function fetchData() {
+        try {
+          const response = await fetch("http://localhost:3000/api/players");
+          if (!response.ok) throw new Error("Network response was not ok");
+          const data = await response.json();
+          const rdata = data.map((player, index) => ({
+            ...player,
+            rank: index + 1
+          }));
+          var i = 1;
+
+          statsBody.innerHTML = "";
+          rdata.forEach((player) => {
+            const row = document.createElement("tr");
+            const rank = player.rank;
+            row.innerHTML = `
+            <td>${rank}</td>
+            ${rank < 4 ? `<td id="top-${rank}">${player.Nick}</td>` : `<td>${player.Nick}</td>`}
             <td>${player.Infections}</td>
             <td>${player.Kills}</td>
-            <td>${player.Time}</td>
-            <td>${player.Last}</td>
+            <td>${formatUNIX(player.Time)}</td>
           `;
-              statsBody.appendChild(row);
-            });
-          } catch (error) {
-            console.error("Error:", error);
-            statsBody.innerHTML =
-              '<tr><td colspan="6">Error loading data</td></tr>';
-          }
+            statsBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error:", error);
+          statsBody.innerHTML =
+            '<tr><td colspan="6">Nie znaleziono graczy</td></tr>';
         }
+      }
 
-        refreshBtn.addEventListener("click", fetchData);
-        fetchData();
-      });
-    </script>
-  </body>
+      refreshBtn.addEventListener("click", fetchData);
+      fetchData();
+    });
+  </script>
+</body>
+
 </html>

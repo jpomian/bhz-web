@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 80%;
+    max-width: 80%;
+    padding: 0;
+    margin: 20px auto 0;
+    border-radius: 10px;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.header-image {
+    width: 60px;
+    height: auto;
+}
+
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.heading h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.heading span {
+    font-size: 14px;
+    color: #ccc; 
+    font-style: italic;
+}
+
+.spect {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    border: 2px dotted #666;
+    height: auto;
+    padding: 5px 15px;
+}
+
+.spect-avi {
+    width: 50px;
+    height: auto;
+    object-fit: cover;
+}
+
+.spect-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 5px 15px;
+}
+
+.spect-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.spect-rank {
+    font-size: 10px;
+    color: #999;
+    text-align: right;
+}
+
+.search-container {
+    width: 75%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+#stats-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th,
+td {
+    padding: 8px 6px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+th tr {
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #5a544a86;
+}
+
+
+
+#top-1 {
+    color: gold;
+    font-weight: bold;
+}
+
+#top-2 {
+    color: silver;
+    font-weight: bold;
+}
+
+#top-3 {
+    color: rgb(175, 81, 4);
+    font-weight: bold;
+}
