@@ -117,7 +117,7 @@
             const frags = player.Kills;
             const staty = order(player.Kills);
             const ranga = `[${staty.roman}] ${staty.name}`
-            const nickContent = `<img id="ranks" src="img/rangi/${staty.badge}"><a href="player.html?id=${player.id}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
+            const nickContent = `<img id="ranks" src="img/rangi/${staty.badge}"><a href="gracz.html?id=${player.Auth}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
             row.innerHTML = `
             <td>${rank}</td>
             ${rank < 4 ? `<td id="top-${rank}" title="${ranga}">${nickContent}</td>` : `<td title="${ranga}">${nickContent}</td>`}

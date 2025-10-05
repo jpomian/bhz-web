@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Profile</title>
+    <style>
+        .player-profile { margin: 20px; }
+        .loading { display: block; }
+        .error { color: red; }
+        .profile-content { display: none; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="loading" class="loading">Loading player data...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="profile" class="profile-content">
+            <h1 id="player-name"></h1>
+            <div class="stats">
+                <p>Kills: <span id="player-kills"></span></p>
+                <p>Infections: <span id="player-infections"></span></p>
+                <p>Time Played: <span id="player-time"></span></p>
+                <p>First Seen: <span id="player-first-seen"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadPlayerData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authId = urlParams.get('id');
+            
+            if (!authId) {
+                showError('No player ID specified');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/gracz/${authId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Player not found');
+                }
+                
+                const playerData = await response.json();
+                displayPlayerData(playerData);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayPlayerData(player) {
+            document.getElementById('player-name').textContent = player.Nick;
+            document.getElementById('player-kills').textContent = player.Kills;
+            document.getElementById('player-infections').textContent = player.Infections;
+            document.getElementById('player-time').textContent = player.Time;
+            document.getElementById('player-first-seen').textContent = player.Last;
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('profile').style.display = 'block';
+        }
+
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').textContent = message;
+        }
+
+        // Load data when page loads
+        loadPlayerData();
+    </script>
+</body>
+</html>

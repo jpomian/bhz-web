@@ -10,6 +10,7 @@ const sql = `SELECT
     sql_mainstats.Nick,
     sql_mainstats.Infections,
     sql_mainstats.Kills,
+    sql_mainstats.Auth,
     sql_times.\`Time Played\` AS \`Time\`,
     sql_times.\`First Seen\` AS \`Last\`
 FROM
@@ -30,7 +31,7 @@ const dbConfig = {
   charset: 'utf8mb4'
 };
 
-app.get('/api/players', async (req, res) => {
+app.get('/api/players', async (_req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
     const [rows] = await connection.query(sql);
@@ -41,6 +42,45 @@ app.get('/api/players', async (req, res) => {
     res.status(500).json({ code: 'Nie zwrócono wyników' });
   }
 });
+
+app.get('/gracz/:authId', async (req, res) => {
+  try {
+    const authId = req.params.authId;
+    if (!authId) {
+      return res.status(400).json({ error: 'Nie ma takiego gracza' });
+    }
+
+    const connection = await mysql.createConnection(dbConfig);
+    
+    const query = `SELECT
+      sql_mainstats.Nick,
+      sql_mainstats.Infections,
+      sql_mainstats.Kills,
+      sql_mainstats.Auth,
+      sql_times.\`Time Played\` AS \`Time\`,
+      sql_times.\`First Seen\` AS \`Last\`
+    FROM
+      sql_mainstats
+    INNER JOIN
+      sql_times
+    ON
+      sql_mainstats.Auth = sql_times.Auth
+    WHERE sql_mainstats.Auth = ?`;
+    
+    const [data] = await connection.query(query, [authId]);
+    await connection.end();
+
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: 'Nie ma takiego gracza' });
+    }
+
+    res.json(data[0]);
+  } catch (error) {
+    console.error('Błąd bazy danych', error);
+    res.status(500).json({ code: 'Nie zwrócono wyników' });
+  }
+});
+
 
 app.use(express.static('public'));
 
