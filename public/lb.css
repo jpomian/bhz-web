@@ -44,7 +44,7 @@ body {
 
 .heading span {
     font-size: 14px;
-    color: #ccc; 
+    color: #ccc;
     font-style: italic;
 }
 
@@ -84,9 +84,76 @@ body {
 }
 
 .search-container {
-    width: 75%;
-    padding: 10px 20px;
-    box-sizing: border-box;
+    position: relative;
+    width: fit-content; /* Make the container only as wide as its content (up to max-width) */
+    max-width: 600px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 16px 20px 16px 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input:focus {
+    border-color: #c9201b;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+}
+
+.search-input:focus+.search-icon {
+    color: #ac2520;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+    .search-input {
+        padding: 14px 16px 14px 45px;
+        font-size: 16px;
+    }
+
+    .search-icon {
+        left: 15px;
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.top-header th:first-child {
+    width: 10%;
+    /* Small percentage for position */
+}
+
+.top-header th:nth-child(2) {
+    width: 40%;
+    /* Largest for player name */
+}
+
+.top-header th:nth-child(3),
+.top-header th:nth-child(4),
+.top-header th:nth-child(5) {
+    width: 16.66%;
+    /* Equal smaller percentages for stats */
 }
 
 #stats-table {
@@ -124,4 +191,34 @@ tr:nth-child(even) {
 #top-3 {
     color: rgb(175, 81, 4);
     font-weight: bold;
+}
+
+#ranks {
+    width: 20px;
+    /* Adjust based on your image size */
+    height: 20px;
+    /* Keep proportional to width */
+    vertical-align: middle;
+    /* Aligns image with text baseline */
+    display: inline-block;
+    /* Allows proper spacing and alignment */
+    margin-right: 8px;
+    /* Space between image and text */
+    object-fit: contain;
+    /* Ensures image fits without distortion */
+}
+
+#top-1 #ranks {
+    width: 24px;
+    height: 24px;
+}
+
+#top-2 #ranks {
+    width: 22px;
+    height: 22px;
+}
+
+#top-3 #ranks {
+    width: 20px;
+    height: 20px;
 }

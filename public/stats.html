@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drabinka</title>
-<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <link rel="stylesheet" href="lb.css" />
 </head>
 
@@ -20,16 +20,19 @@
     </div>
     <div class="spect">
       <div class="spect-details">
-        <span class="spect-name">Gracz</span>
-        <span class="spect-rank">Ranking: #999</span>
+        <span class="spect-name">Marszałek</span>
+        <span class="spect-rank">Ranking: #666</span>
       </div>
-      <img class='spect-avi' src="img/zm.png" alt="Player Avatar" />
+      <img class='spect-avi' src="img/zm.png" alt="Avatar" />
     </div>
   </div>
   <div class="container">
     <div class="search-container">
-      <input type="text" class="search-input" placeholder="Wpisz nick..." id="searchInput">
-      <button class="clear-btn" id="clearBtn">O</button>
+      <input type="text" class="search-input" placeholder="Nick gracza" aria-label="Search">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
     </div>
     <table id="stats-table">
       <thead>
@@ -38,8 +41,8 @@
             Pozycja
           </th>
           <th>Nazwa gracza</th>
-          <th>Infekcje</th>
           <th>Zabicia</th>
+          <th>Infekcje</th>
           <th>Czas Gry</th>
         </tr>
       </thead>
@@ -47,13 +50,11 @@
         <!-- Data will be inserted here by JavaScripts -->
       </tbody>
     </table>
-    <button id="refresh-btn">Refresh Data</button>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
       const statsBody = document.getElementById("stats-body");
-      const refreshBtn = document.getElementById("refresh-btn");
 
       function formatUNIX(input) {
         const inputStr = input.toString();
@@ -68,6 +69,34 @@
           const minutes = Math.floor((input % 3600) / 60);
           return `${hours}H : ${minutes.toString().padStart(2, '0')}M`;
         }
+      }
+
+      const kille = [
+        { min: 10, max: 24, image: "1.png", name: "Szeregowy", numeral: "I" },
+        { min: 25, max: 49, image: "2.png", name: "Starszy Szeregowy", numeral: "II" },
+        { min: 50, max: 99, image: "3.png", name: "Kapral", numeral: "III" },
+        { min: 100, max: 249, image: "4.png", name: "Starszy Kapral", numeral: "IV" },
+        { min: 250, max: 449, image: "5.png", name: "Plutonowy", numeral: "V" },
+        { min: 450, max: 699, image: "6.png", name: "Sierżant", numeral: "VI" },
+        { min: 700, max: 999, image: "7.png", name: "Starszy Sierżant", numeral: "VII" },
+        { min: 1000, max: 1499, image: "8.png", name: "Chorąży", numeral: "VIII" },
+        { min: 1500, max: 1999, image: "9.png", name: "Sztabowy", numeral: "IX" },
+        { min: 2000, max: 2499, image: "10.png", name: "Podporucznik", numeral: "X" },
+        { min: 2500, max: 3199, image: "11.png", name: "Porucznik", numeral: "XI" },
+        { min: 3200, max: 4499, image: "12.png", name: "Kapitan", numeral: "XII" },
+        { min: 4500, max: 5999, image: "13.png", name: "Major", numeral: "XIII" },
+        { min: 6000, max: 7749, image: "14.png", name: "Podpułkownik", numeral: "XIV" }
+      ];
+
+      function order(target) {
+        const index = kille.findIndex(range => target >= range.min && target <= range.max);
+        const range = kille[index];
+
+        return {
+          badge: range ? range.image : '1.png',
+          name: range ? range.name : 'Bot',
+          roman: range ? range.numeral : ''
+        };
       }
 
       async function fetchData() {
@@ -85,11 +114,15 @@
           rdata.forEach((player) => {
             const row = document.createElement("tr");
             const rank = player.rank;
+            const frags = player.Kills;
+            const staty = order(player.Kills);
+            const ranga = `[${staty.roman}] ${staty.name}`
+            const nickContent = `<img id="ranks" src="img/rangi/${staty.badge}"><a href="player.html?id=${player.id}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
             row.innerHTML = `
             <td>${rank}</td>
-            ${rank < 4 ? `<td id="top-${rank}">${player.Nick}</td>` : `<td>${player.Nick}</td>`}
+            ${rank < 4 ? `<td id="top-${rank}" title="${ranga}">${nickContent}</td>` : `<td title="${ranga}">${nickContent}</td>`}
+            <td>${frags}</td>
             <td>${player.Infections}</td>
-            <td>${player.Kills}</td>
             <td>${formatUNIX(player.Time)}</td>
           `;
             statsBody.appendChild(row);
@@ -100,8 +133,6 @@
             '<tr><td colspan="6">Nie znaleziono graczy</td></tr>';
         }
       }
-
-      refreshBtn.addEventListener("click", fetchData);
       fetchData();
     });
   </script>
