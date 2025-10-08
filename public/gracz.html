@@ -1,45 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Player Profile</title>
-    <style>
-        .player-profile { margin: 20px; }
-        .loading { display: block; }
-        .error { color: red; }
-        .profile-content { display: none; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Gracza</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="gracz.css" />
 </head>
 <body>
-    <div id="app">
-        <div id="loading" class="loading">Loading player data...</div>
+    <div class="container">
+        <div id="loading" class="loading">Ładowanie danych gracza...</div>
         <div id="error" class="error" style="display: none;"></div>
         <div id="profile" class="profile-content">
-            <h1 id="player-name"></h1>
-            <div class="stats">
-                <p>Kills: <span id="player-kills"></span></p>
-                <p>Infections: <span id="player-infections"></span></p>
-                <p>Time Played: <span id="player-time"></span></p>
-                <p>First Seen: <span id="player-first-seen"></span></p>
-            </div>
+            <!-- nick -->
+             <div class="superheader">
+                <h1 id="nazwa"></h1>
+                <h2 id="stopien"></h2>
+             </div>
+            <!-- staty -->
+            <ul class="stats-list">
+                <li class="stat-item">
+                    <span class="stat-label">Zabicia</span>
+                    <span class="stat-value" id="player-kills"></span>
+                </li>
+                <li class="stat-item">
+                    <span class="stat-label">Infekcje</span>
+                    <span class="stat-value" id="player-infections"></span>
+                </li>
+                <li class="stat-item">
+                    <span class="stat-label">Czas Gry</span>
+                    <span class="stat-value" id="player-time"></span>
+                </li>
+                <li class="stat-item">
+                    <span class="stat-label">Ostatnio Widziany</span>
+                    <span class="stat-value" id="player-first-seen"></span>
+                </li>
+            <a class="comeback" href="/stats.html">Powrót</button>
+
+            </ul>
         </div>
     </div>
 
     <script>
+        const kille = [
+            { min: 10, max: 24, image: "1.png", name: "Szeregowy", numeral: "I" },
+            { min: 25, max: 49, image: "2.png", name: "Starszy Szeregowy", numeral: "II" },
+            { min: 50, max: 99, image: "3.png", name: "Kapral", numeral: "III" },
+            { min: 100, max: 249, image: "4.png", name: "Starszy Kapral", numeral: "IV" },
+            { min: 250, max: 449, image: "5.png", name: "Plutonowy", numeral: "V" },
+            { min: 450, max: 699, image: "6.png", name: "Sierżant", numeral: "VI" },
+            { min: 700, max: 999, image: "7.png", name: "Starszy Sierżant", numeral: "VII" },
+            { min: 1000, max: 1499, image: "8.png", name: "Chorąży", numeral: "VIII" },
+            { min: 1500, max: 1999, image: "9.png", name: "Sztabowy", numeral: "IX" },
+            { min: 2000, max: 2499, image: "10.png", name: "Podporucznik", numeral: "X" },
+            { min: 2500, max: 3199, image: "11.png", name: "Porucznik", numeral: "XI" },
+            { min: 3200, max: 4499, image: "12.png", name: "Kapitan", numeral: "XII" },
+            { min: 4500, max: 5999, image: "13.png", name: "Major", numeral: "XIII" },
+            { min: 6000, max: 7749, image: "14.png", name: "Podpułkownik", numeral: "XIV" }
+        ];
+
+        function konwert(target) {
+            const index = kille.findIndex(range => target >= range.min && target <= range.max);
+            const range = kille[index];
+
+            return {
+                badge: range ? range.image : '1.png',
+                name: range ? range.name : 'Bot',
+                roman: range ? range.numeral : ''
+            };
+        }
+
+        function formatUNIX(input) {
+            const inputStr = input.toString();
+            if (inputStr.length === 10) {
+                const date = new Date(input * 1000);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            } else {
+                const hours = Math.floor(input / 3600);
+                const minutes = Math.floor((input % 3600) / 60);
+                return `${hours}H : ${minutes.toString().padStart(2, '0')}M`;
+            }
+        }
+
         async function loadPlayerData() {
             const urlParams = new URLSearchParams(window.location.search);
             const authId = urlParams.get('id');
             
             if (!authId) {
-                showError('No player ID specified');
+                showError('Nie podano ID gracza');
                 return;
             }
 
             try {
                 const response = await fetch(`/api/gracz/${authId}`);
-                // const response = await fetch("http://localhost:3000/api/players");
                 
                 if (!response.ok) {
-                    throw new Error('Player not found');
+                    throw new Error('Nie znaleziono gracza');
                 }
                 
                 const playerData = await response.json();
@@ -50,14 +109,17 @@
         }
 
         function displayPlayerData(player) {
-            document.getElementById('player-name').textContent = player.Nick;
-            document.getElementById('player-kills').textContent = player.Kills;
-            document.getElementById('player-infections').textContent = player.Infections;
-            document.getElementById('player-time').textContent = player.Time;
-            document.getElementById('player-first-seen').textContent = player.Last;
+            const rank = konwert(player.Kills);
+            
+            document.getElementById('nazwa').innerHTML = `<span class="fancy">${player.Nick}</span>`;
+            document.getElementById('stopien').innerHTML = `<img id="ranks" src="img/rangi/${rank.badge}"> ${rank.name}`;
+            document.getElementById('player-kills').textContent = player.Kills.toLocaleString();
+            document.getElementById('player-infections').textContent = player.Infections.toLocaleString();
+            document.getElementById('player-time').textContent = formatUNIX(player.Time);
+            document.getElementById('player-first-seen').textContent = formatUNIX(player.Last);
             
             document.getElementById('loading').style.display = 'none';
-            document.getElementById('profile').style.display = 'block';
+            document.getElementById('profile').classList.add('active');
         }
 
         function showError(message) {
@@ -66,7 +128,6 @@
             document.getElementById('error').textContent = message;
         }
 
-        // Load data when page loads
         loadPlayerData();
     </script>
 </body>
