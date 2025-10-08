@@ -35,7 +35,8 @@
             }
 
             try {
-                const response = await fetch(`/gracz/${authId}`);
+                const response = await fetch(`/api/gracz/${authId}`);
+                // const response = await fetch("http://localhost:3000/api/players");
                 
                 if (!response.ok) {
                     throw new Error('Player not found');

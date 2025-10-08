@@ -63,7 +63,7 @@
       
       let currentPage = 1;
       let rowsPerPage = 15;
-      let allPlayersData = [];
+      let statyGracza = [];
       let originalData = [];
 
       function formatUNIX(input) {
@@ -98,7 +98,7 @@
         { min: 6000, max: 7749, image: "14.png", name: "Podpułkownik", numeral: "XIV" }
       ];
 
-      function order(target) {
+      function konwert(target) {
         const index = kille.findIndex(range => target >= range.min && target <= range.max);
         const range = kille[index];
 
@@ -114,17 +114,17 @@
         
         // Calculate start and end indices for current page
         const startIndex = (currentPage - 1) * rowsPerPage;
-        const endIndex = Math.min(startIndex + rowsPerPage, allPlayersData.length);
+        const endIndex = Math.min(startIndex + rowsPerPage, statyGracza.length);
         
         // Create rows for current page
         for (let i = startIndex; i < endIndex; i++) {
-          const player = allPlayersData[i];
+          const player = statyGracza[i];
           const row = document.createElement("tr");
-          const rank = player.originalRank; // Use original rank instead of current position
+          const rank = player.originalRank;
           const frags = player.Kills;
-          const staty = order(player.Kills);
-          const ranga = `[${staty.roman}] ${staty.name}`;
-          const nickContent = `<img id="ranks" src="img/rangi/${staty.badge}"><a href="gracz.html?id=${player.Auth}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
+          const order = konwert(player.Kills);
+          const ranga = `[${order.roman}] ${order.name}`;
+          const nickContent = `<img id="ranks" src="img/rangi/${order.badge}"><a href="gracz.html?id=${player.Auth}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
           
           row.innerHTML = `
             <td>${rank}</td>
@@ -140,7 +140,7 @@
       }
 
       function updatePaginationInfo() {
-        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        const totalPages = Math.ceil(statyGracza.length / rowsPerPage);
         document.getElementById('current-page').textContent = currentPage;
         document.getElementById('total-pages').textContent = totalPages;
         
@@ -152,7 +152,7 @@
       }
 
       function goToPage(page) {
-        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        const totalPages = Math.ceil(statyGracza.length / rowsPerPage);
         if (page >= 1 && page <= totalPages) {
           currentPage = page;
           renderTable();
@@ -160,7 +160,7 @@
       }
 
       function nextPage() {
-        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        const totalPages = Math.ceil(statyGracza.length / rowsPerPage);
         if (currentPage < totalPages) {
           currentPage++;
           renderTable();
@@ -175,7 +175,7 @@
       }
 
       function lastPage() {
-        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        const totalPages = Math.ceil(statyGracza.length / rowsPerPage);
         goToPage(totalPages);
       }
 
@@ -192,9 +192,9 @@
           const searchTerm = e.target.value.toLowerCase().trim();
           
           if (searchTerm === '') {
-            allPlayersData = [...originalData];
+            statyGracza = [...originalData];
           } else {
-            allPlayersData = originalData.filter(player => 
+            statyGracza = originalData.filter(player => 
               player.Nick.toLowerCase().includes(searchTerm)
             );
           }
@@ -215,7 +215,7 @@
             originalRank: index + 1
           }));
           
-          allPlayersData = [...originalData];
+          statyGracza = [...originalData];
 
           setupPaginationListeners();
           setupSearch();
