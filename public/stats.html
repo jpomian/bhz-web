@@ -37,9 +37,7 @@
     <table id="stats-table">
       <thead>
         <tr class="top-header">
-          <th>
-            Pozycja
-          </th>
+          <th>Pozycja</th>
           <th>Nazwa gracza</th>
           <th>Zabicia</th>
           <th>Infekcje</th>
@@ -47,14 +45,26 @@
         </tr>
       </thead>
       <tbody id="stats-body">
-        <!-- Data will be inserted here by JavaScripts -->
+        <!-- Data will be inserted here by JavaScript -->
       </tbody>
     </table>
+    <div class="pagination">
+      <button id="first-page">Pierwsza</button>
+      <button id="prev-page"><<</button>
+      <span class="page-info">Strona <span id="current-page">1</span> z <span id="total-pages">1</span></span>
+      <button id="next-page">>></button>
+      <button id="last-page">Ostatnia</button>
+    </div>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
       const statsBody = document.getElementById("stats-body");
+      
+      let currentPage = 1;
+      let rowsPerPage = 15;
+      let allPlayersData = [];
+      let originalData = [];
 
       function formatUNIX(input) {
         const inputStr = input.toString();
@@ -99,43 +109,125 @@
         };
       }
 
-      async function fetchData() {
-        try {
-          const response = await fetch("http://localhost:3000/api/players");
-          if (!response.ok) throw new Error("Network response was not ok");
-          const data = await response.json();
-          const rdata = data.map((player, index) => ({
-            ...player,
-            rank: index + 1
-          }));
-          var i = 1;
-
-          statsBody.innerHTML = "";
-          rdata.forEach((player) => {
-            const row = document.createElement("tr");
-            const rank = player.rank;
-            const frags = player.Kills;
-            const staty = order(player.Kills);
-            const ranga = `[${staty.roman}] ${staty.name}`
-            const nickContent = `<img id="ranks" src="img/rangi/${staty.badge}"><a href="gracz.html?id=${player.Auth}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
-            row.innerHTML = `
+      function renderTable() {
+        statsBody.innerHTML = "";
+        
+        // Calculate start and end indices for current page
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = Math.min(startIndex + rowsPerPage, allPlayersData.length);
+        
+        // Create rows for current page
+        for (let i = startIndex; i < endIndex; i++) {
+          const player = allPlayersData[i];
+          const row = document.createElement("tr");
+          const rank = player.originalRank; // Use original rank instead of current position
+          const frags = player.Kills;
+          const staty = order(player.Kills);
+          const ranga = `[${staty.roman}] ${staty.name}`;
+          const nickContent = `<img id="ranks" src="img/rangi/${staty.badge}"><a href="gracz.html?id=${player.Auth}" style="text-decoration: none; color: inherit;">${player.Nick}</a>`;
+          
+          row.innerHTML = `
             <td>${rank}</td>
             ${rank < 4 ? `<td id="top-${rank}" title="${ranga}">${nickContent}</td>` : `<td title="${ranga}">${nickContent}</td>`}
             <td>${frags}</td>
             <td>${player.Infections}</td>
             <td>${formatUNIX(player.Time)}</td>
           `;
-            statsBody.appendChild(row);
-          });
-        } catch (error) {
-          console.error("Error:", error);
-          statsBody.innerHTML =
-            '<tr><td colspan="6">Nie znaleziono graczy</td></tr>';
+          statsBody.appendChild(row);
+        }
+        
+        updatePaginationInfo();
+      }
+
+      function updatePaginationInfo() {
+        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        document.getElementById('current-page').textContent = currentPage;
+        document.getElementById('total-pages').textContent = totalPages;
+        
+        // Enable/disable buttons based on current page
+        document.getElementById('first-page').disabled = currentPage === 1;
+        document.getElementById('prev-page').disabled = currentPage === 1;
+        document.getElementById('next-page').disabled = currentPage === totalPages;
+        document.getElementById('last-page').disabled = currentPage === totalPages;
+      }
+
+      function goToPage(page) {
+        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        if (page >= 1 && page <= totalPages) {
+          currentPage = page;
+          renderTable();
         }
       }
+
+      function nextPage() {
+        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      }
+
+      function previousPage() {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      }
+
+      function lastPage() {
+        const totalPages = Math.ceil(allPlayersData.length / rowsPerPage);
+        goToPage(totalPages);
+      }
+
+      function setupPaginationListeners() {
+        document.getElementById('first-page').addEventListener('click', () => goToPage(1));
+        document.getElementById('prev-page').addEventListener('click', previousPage);
+        document.getElementById('next-page').addEventListener('click', nextPage);
+        document.getElementById('last-page').addEventListener('click', lastPage);
+      }
+
+      function setupSearch() {
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase().trim();
+          
+          if (searchTerm === '') {
+            allPlayersData = [...originalData];
+          } else {
+            allPlayersData = originalData.filter(player => 
+              player.Nick.toLowerCase().includes(searchTerm)
+            );
+          }
+          
+          currentPage = 1;
+          renderTable();
+        });
+      }
+
+      async function fetchData() {
+        try {
+          const response = await fetch("http://localhost:3000/api/players");
+          if (!response.ok) throw new Error("Network response was not ok");
+          const data = await response.json();
+          
+          originalData = data.map((player, index) => ({
+            ...player,
+            originalRank: index + 1
+          }));
+          
+          allPlayersData = [...originalData];
+
+          setupPaginationListeners();
+          setupSearch();
+          renderTable();
+        } catch (error) {
+          console.error("Error:", error);
+          statsBody.innerHTML = '<tr><td colspan="5">Nie znaleziono graczy</td></tr>';
+        }
+      }
+
       fetchData();
     });
   </script>
 </body>
-
 </html>

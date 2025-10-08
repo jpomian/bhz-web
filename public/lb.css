@@ -85,7 +85,8 @@ body {
 
 .search-container {
     position: relative;
-    width: fit-content; /* Make the container only as wide as its content (up to max-width) */
+    width: fit-content;
+    /* Make the container only as wide as its content (up to max-width) */
     max-width: 600px;
 }
 
@@ -176,7 +177,43 @@ tr:nth-child(even) {
     background-color: #5a544a86;
 }
 
+.pagination {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
+.pagination button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #f1f1f1;
+}
+
+.pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.page-info {
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
 
 #top-1 {
     color: gold;
