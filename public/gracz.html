@@ -11,6 +11,9 @@
     <div class="container">
         <div id="loading" class="loading">Ładowanie danych gracza...</div>
         <div id="error" class="error" style="display: none;"></div>
+        <div class="banner">
+            <a href="https://www.gametracker.com/server_info/193.33.176.30:27065/" target="_blank"><img src="https://cache.gametracker.com/server_info/193.33.176.30:27065/b_560_95_1.png" border="0" width="520" height="95" alt=""/></a>
+        </div>
         <div id="profile" class="profile-content">
             <!-- nick -->
              <div class="superheader">
@@ -19,6 +22,10 @@
              </div>
             <!-- staty -->
             <ul class="stats-list">
+                <li class="stat-item">
+                    <span class="stat-label">Steam</span>
+                    <span class="stat-value" id="player-sid"></span>
+                </li>
                 <li class="stat-item">
                     <span class="stat-label">Zabicia</span>
                     <span class="stat-value" id="player-kills"></span>
@@ -35,7 +42,7 @@
                     <span class="stat-label">Ostatnio Widziany</span>
                     <span class="stat-value" id="player-first-seen"></span>
                 </li>
-            <a class="comeback" href="/stats.html">Powrót</button>
+            <a class="comeback" href="/stats.html">Powrót →</button>
 
             </ul>
         </div>
@@ -113,7 +120,10 @@
             
             document.getElementById('nazwa').innerHTML = `<span class="fancy">${player.Nick}</span>`;
             document.getElementById('stopien').innerHTML = `<img id="ranks" src="img/rangi/${rank.badge}"> ${rank.name}`;
-            document.getElementById('player-kills').textContent = player.Kills.toLocaleString();
+            document.getElementById('player-kills').innerHTML = player.Kills.toLocaleString();
+            sid = document.getElementById('player-sid')
+            auth = player.Auth.toLocaleString()
+            sid.innerHTML = `<a id="steamid" href="https://steamid.xyz/${auth}">${auth}</a>`;
             document.getElementById('player-infections').textContent = player.Infections.toLocaleString();
             document.getElementById('player-time').textContent = formatUNIX(player.Time);
             document.getElementById('player-first-seen').textContent = formatUNIX(player.Last);
