@@ -1,115 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>CS 1.6: Biohazard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 1.6: Zombie Biohazard</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #333;
-            color: #fff;
-        }
-
-        .header-image {
-            width: 270px;
-            height: auto;
-        }
-
-        h1, p {
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            background-color: #444;
-            color: #fff;
-            border: none;
-            margin: 15px 0;
-            padding: 10px 30px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #bd3a3a;
-        }
-
-        .server-info {
-            font-size: large;
-            font-weight: 100;
-            color: #c29393;
-            animation: glowing 2s infinite;
-        }
-
-        @keyframes glowing {
-            0% {
-                color: #c29393;
-            }
-
-            50% {
-                color: #ff0000;
-            }
-
-            100% {
-                color: #c29393;
-            }
-        }
-
-        .big-button {
-            width: calc(3 * (10px 40px + 10px));
-            background-color: #444;
-            color: #fff;
-            border: none;
-            margin: 5px 0;
-            padding: 10px 30px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .special-button {
-            font-weight: bold;
-            color:#eeeb2d
-        }
-
-        .big-button:hover {
-            background-color: #bd3a3a;
-        }
-
-    </style>
+    <link rel="stylesheet" href="style/main.css" />
 </head>
 
 <body>
-    <img class="header-image" src="img/biohazard.png" alt="Biohazard" />
-    <h1>Witaj na głównej stronie Zombie Biohazard!</h1>
-    <a href="steam://connect/91.224.117.42:27120/" alt="Połącz się z serwerem!">
-        <p class="server-info">IP: 91.224.117.42:27120</p>
-    </a>
-    <div class="button-container">
-        <button onclick="location.href='vip.html'">VIP Info</button>
-        <button onclick="location.href='mapcykl.html'">Mapy</button>
-        <button class="special-button" onclick="location.href='dotacje.html'">Zbiórka</button>
-        <button onclick="location.href='rangi.html'">Rangi</button>
-        <button onclick="location.href='stats.html'">Statystyki</button>
+    <nav>
+        <div class="logo"><a href='/'><img src="img/biohazard2.png" />Biohazard</a></div>
+        <ul>
+            <div class="dropdown">
+                <li>regulamin <span>▼</span></li>
+                <div class="dropdown-content">
+                    <a href="reg/ogolny.html">Ogólny</a>
+                    <a href="reg/ct.html">CT</a>
+                    <a href="reg/zm.html">ZM</a>
+                </div>
+            </div>
+            <a href="vip.html">
+                <li>vip</li>
+            </a>
+            <div class="dropdown">
+                <li>mapy <span>▼</span></li>
+                <div class="dropdown-content">
+                    <a href="mapy-dzien.html">Mapcykl Dzienny</a>
+                    <a href="mapy-noc.html">Mapcykl Nocny</a>
+                </div>
+            </div>
+            <a href="rangi.html">
+                <li>rangi</li>
+            </a>
+            <a href="stats.html">
+                <li>statystyki</li>
+            </a>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div id="twitch-embed"></div>
+
+        <div class="ip-container">
+            <div id="server-ip">IP: xxx.xx.xxx</div>
+            <button id="copy-btn" class="copy-button">&#x2398;</button>
+        </div>
+
+        <div class="button-container">
+            <a href="https://discord.gg/PCBCNFrJKR" class="btn btn-tan"><img src="img/discord.png" />Odwiedź
+                Discorda</a>
+            <a class="btn btn-gray"><img src="img/stem.png" />Graj teraz!</a>
+        </div>
     </div>
-    <button class="big-button" onclick="location.href='regulamin.html'">Regulamin</button>
 
-    <iframe src="footer.html" scrolling="no" frameborder="0" width="100%" height="160"></iframe>
+    <section class="history-section">
+        <div class="content-wrapper">
+            <div class="content-text">
+                <h2>Historia serwera</h2>
+                <p>Pierwszy raz serwer został założony w 2009 roku.
+                    Były to złote lata CS 1.6. Wejście na serwer graniczyło z cudem,
+                    ludzie koczowali w oczekiwaniu na wolny slot.</p>
+                <p>Serwer, który prowadził tą oryginalną, własnościową modyfikacje został zamknięty w 2016 roku.</p>
+                <p>Gracze byli niezadowoleni. Nie mogli znaleźć serwera, który dorównałby Biohazardowi który niegdyś był
+                    online.</p>
+                <p>W dobie COVID-19 (2020r.), serwer znowu ujrzał światło dzienne. Zachwyceni gracze czerpali z niego
+                    garściami wbijając tysiące infekcji i zabójstw.</p>
+                <p>Rok 2025. Serwer wraca w nowym wydaniu i z nową siłą.</p>
+            </div>
+            <div class="content-image">
+                <img src="img/biohazard.png">
+            </div>
+        </div>
+    </section>
 
+    <section class="stats-section">
+        <div class="content-wrapper">
+            <div class="content-text">
+                <h2>Grasz dla celu</h2>
+                <p>To co robisz na serwerze zostanie zapisane i zapamiętane. Walcz o swoje i wspinaj się w rankingu.</p>
+                <p>Każde zombie, które zabijesz. Każdy człowiek, którego zarazisz. Te statystyki zostają przypisane do
+                    Twojego imienia (a właściwie to do SteamID).</p>
+                <p>Sprawdź, gdzie plasujesz w rankingu. Ile brakuje Ci zabójstw żeby przegonić gracza wyżej? Sprawdź
+                    poniżej.</p>
+                <p>Najlepsi gracze otrzymają nagrody o realnej wartości pieniężnej*.</p>
+                <div class="button-container">
+                    <a href="/stats.html" class="btn btn-stats"><span>&#9813;</span> Statystyki </a>
+                    <a href="wip.html" class="btn btn-prize"><span>&#10070;</span> Alokacja nagród</a>
+                </div>
+                <div class="legend">* Pod warunkiem, że weźmie udział odpowiednia liczba unikalnych graczy. Łączny czas
+                    gry tych graczy musi być powyżej ustalonego progu.</div>
+            </div>
+            <div class="content-image">
+                <img src="img/podium-tp.png">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2025 Made with <3 by Mixtaz</p>
+                    <div class="footer-links">
+                        <a href="#11">GameTracker</a>
+                        <a href="#22">YouTube</a>
+                        <a href="#33">Twitch</a>
+                    </div>
+        </div>
+    </footer>
+
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+    <script type="text/javascript">
+        new Twitch.Player("twitch-embed", {
+            height: "540",
+            width: "960",
+            channel: "karradash"
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const copyButton = document.getElementById('copy-btn');
+            const serverIp = document.getElementById('server-ip');
+
+            copyButton.addEventListener('click', function () {
+                const ipText = serverIp.textContent.replace('IP: ', '');
+
+                navigator.clipboard.writeText(ipText).then(function () {
+                    const originalText = copyButton.textContent;
+                    copyButton.textContent = 'Skopiowano IP.';
+                    copyButton.classList.add('Skopiowano IP.');
+
+                    // Reset button after 2 seconds
+                    setTimeout(function () {
+                        copyButton.textContent = originalText;
+                        copyButton.classList.remove('Skopiowano IP.');
+                    }, 2000);
+
+                }).catch(function (err) {
+                    console.error('Failed to copy: ', err);
+                    copyButton.textContent = 'Skopiowano IP.';
+                    setTimeout(function () {
+                        copyButton.textContent = '...';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
